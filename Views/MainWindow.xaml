@@ -1,0 +1,38 @@
+﻿<Window x:Class="DigitalTwin.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Цифровой двойник завода" Height="600" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок завода -->
+        <StackPanel Grid.Row="0" Margin="10">
+            <TextBlock Text="{Binding Factory.Name}" FontSize="24" FontWeight="Bold"/>
+            <TextBlock Text="{Binding Factory.TotalProduction, StringFormat='Общая продукция: {0}'}"/>
+        </StackPanel>
+
+        <!-- Список машин -->
+        <ListView Grid.Row="1" ItemsSource="{Binding Factory.Machines}" 
+                  SelectedItem="{Binding SelectedMachine}" Margin="10">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Название" DisplayMemberBinding="{Binding Name}" Width="120"/>
+                    <GridViewColumn Header="Тип" DisplayMemberBinding="{Binding Type}" Width="100"/>
+                    <GridViewColumn Header="Температура" DisplayMemberBinding="{Binding Temperature, StringFormat={}{0}°C}" Width="100"/>
+                    <GridViewColumn Header="Вибрация" DisplayMemberBinding="{Binding Vibration, StringFormat={}{0} мм/с}" Width="100"/>
+                    <GridViewColumn Header="Производительность" DisplayMemberBinding="{Binding ProductionRate, StringFormat={}{0} ед/мин}" Width="120"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <!-- Панель управления -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button Content="Старт симуляции" Command="{Binding StartSimulationCommand}" Width="120" Margin="5"/>
+            <Button Content="Стоп симуляции" Command="{Binding StopSimulationCommand}" Width="120" Margin="5"/>
+        </StackPanel>
+    </Grid>
+</Window>
